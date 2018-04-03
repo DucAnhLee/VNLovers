@@ -1,5 +1,5 @@
 <div ng-cloak>
-    <div class="row" style="height: 350px;">
+    <div class="row" style="height: 400px;">
         <div class="col-sm-12 text-center">
             <h3>CheckIns Viet Nam Analytic</h3>
         </div>
@@ -12,6 +12,7 @@
                 <p>{{ vnLoverInfo.fan_count | number }} people like this page</p>
                 <p>{{ vnLoverInfo.talking_about_count | number }} people talking about this</p>
                 <!-- <p>{{ vnLoverInfo.rating_count }} people rating this page</p> -->
+                <p>{{ rating['rating_description'][0] }}</p>
 
                 <div id="rating_chart" style="height: 200px;overflow: auto"></div>
             </div>
@@ -19,6 +20,22 @@
     </div>
     <br>
     <div class="row">
-        <div id="post_timestamp" style="height: 400px; min-width: 310px"></div>
+        <div class="col-sm-9">
+            <div id="post_timestamp" style="height: 400px; min-width: 310px"></div>
+        </div>
+
+        <div class="col-sm-3">
+            <h4>Top 10 địa điểm được nhắc đến nhiều nhất</h4>
+            <ol>
+                <li ng-repeat="t in top10Locations">{{ t[0] }}: {{ t[1] }} lần</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="post_per_hour" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    </div>
+    <div class="row">
+        <div id="pph_reaction_all" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     </div>
 </div>
