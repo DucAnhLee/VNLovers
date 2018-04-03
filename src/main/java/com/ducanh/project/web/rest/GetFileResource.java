@@ -26,9 +26,11 @@ public class GetFileResource {
 	@GetMapping("/get-vnlover-home")
 	public ResponseEntity<VnLoverHome> getVNLoverHome() throws IOException {
 		List<List<Long>> post_timestamp = mapper.readValue(new FileInputStream(ResourceUtils.getFile("classpath:post_timestampv2.json")), new TypeReference<List<List<Long>>>(){});
+		List<List<Long>> post_per_hours = mapper.readValue(new FileInputStream(ResourceUtils.getFile("classpath:posts_per_hoursv3.json")), new TypeReference<List<List<Long>>>(){});
+		List<List<String>> top10_locations = mapper.readValue(new FileInputStream(ResourceUtils.getFile("classpath:post_location_sparkv2.json")), new TypeReference<List<List<String>>>(){});
 		
-		TypeReference<List<VNLoverInfo>> typeReference = new TypeReference<List<VNLoverInfo>>(){};
-		List<VNLoverInfo> info = mapper.readValue(new FileInputStream(ResourceUtils.getFile("classpath:vnlover_info.json")),typeReference);
+		TypeReference<List<VNLoverInfo>> typeReference = new TypeReference<List<VNLoverInfo>>(){}; 
+		List<VNLoverInfo> info = mapper.readValue(new FileInputStream(ResourceUtils.getFile("classpath:vnlover_info.json")),typeReference); 
 
 		TypeReference<List<VNLoverRating>> typeReference1 = new TypeReference<List<VNLoverRating>>(){};
 		List<VNLoverRating> rating = mapper.readValue(new FileInputStream(ResourceUtils.getFile("classpath:vnlover_rating.json")),typeReference1);
@@ -37,7 +39,7 @@ public class GetFileResource {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		VnLoverHome vnLoverHome = new VnLoverHome(info.get(0), rating.get(0), post_timestamp);
+		VnLoverHome vnLoverHome = new VnLoverHome(info.get(0), rating.get(0), post_timestamp, post_per_hours, top10_locations.subList(0, 10));
 		
 		return new ResponseEntity<>(vnLoverHome, HttpStatus.OK);
 	}
